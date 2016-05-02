@@ -1,0 +1,21 @@
+<% include ../include/indexTop %>
+<h1 style="margin-top: 0">Sign In</h1>
+<% if(errMsg.length > 0){ %>
+    <div class="alert alert-danger">
+     <%= errMsg %>
+    </div>
+<% } %>
+<% include ../include/flashErrorMsg %>
+<% include ../include/flashSucMsg %>
+<form action="signIn" method="post">
+    <label class="arrow-form">Email</label>
+    <br><input name="primaryEmail" class="arrow-form">
+    <br>
+    <br><label class="arrow-form">Password</label>
+    <br><input type="password" name="password" class="arrow-form">
+    <input type="submit" class="arrow-button" value="Login" style="margin-top: 2em;">
+    <input name="remember" type="checkbox">Remember Me
+</form>
+
+<h3 style="margin-bottom: 0em;color:#3197ca;">Create an account</h3>
+<% include ../include/indexBottom %>

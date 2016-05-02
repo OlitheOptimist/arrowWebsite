@@ -1,0 +1,23 @@
+<% include ../include/indexTop %>
+<h1 style="margin-top: 0">Sign Up</h1>
+<% include ../include/flashErrorMsg %>
+<form>
+    <p><label class="arrow-form">Name *</label>
+    <br>
+    <input name="firstName" class="arrow-form" placeholder="First" style="width:47.5%;margin: 0 5% 0 0;"><input name="lastName" placeholder="Last" class="arrow-form" style="width:47.5%;"></p>
+
+    <p><label class="arrow-form">Primary Email *</label>
+    <input name="primaryEmail" class="arrow-form"></p>
+
+    <p><label class="arrow-form">University Email</label>
+    <input name="uniEmail" class="arrow-form"></p>
+
+    <p><label class="arrow-form">Password *</label>
+    <input name="password" class="arrow-form"></p>
+
+    <p><label class="arrow-form">Confirm Password *</label>
+    <input class="arrow-form"></p>
+
+    <input type="submit" value="Create Account" class="arrow-button" style="margin-top: 2em;">
+</form>
+<% include ../include/indexBottom %>
