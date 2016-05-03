@@ -25,14 +25,12 @@ passport.use('signIn', new LocalStrategy({
     usernameField: 'email'
 },
 function(req, email, password, done){
-    console.log(req.body);
     User.findOne({ 'primaryEmail': email }, function(err, user){
-        console.log(user);
         if (err)
             return done(err);
         if (!user)
             return done(null, false, req.flash('errMsg', 'User not found. Please try again.'));
-        if (!user.validPassword(password))
+        if (!user.validatePassword(password))
             return done(null, false, req.flash('errMsg', 'Incorrect Username or Password.'));
 
         return done(null, user);
@@ -57,7 +55,7 @@ function(req, email, password, done){
             else
             {
                 var newUser = new User();
-                newUser.primaryEmail = primaryEmail;
+                newUser.primaryEmail = email;
                 if(req.body.uniEmail){
                     newUser.uniEmail = req.body.uniEmail;
                 }
@@ -307,7 +305,7 @@ app.post('/signIn', passport.authenticate('signIn', {
         req.session.cookie.maxAge = 2592000000; // 1 Month 
     else
         req.session.cookie.expires = false; // Expires at end of session
-    res.redirect('../home');
+    res.redirect('../profile/profilePage');
 });
 
 app.post('/signUp', passport.authenticate('signUp', {

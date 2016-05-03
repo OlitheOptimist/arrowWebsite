@@ -16,6 +16,7 @@ var User = require('./models/user');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
+var profile = require('./routes/profile');
 
 var app = express();
 
@@ -27,7 +28,7 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/mod', express.static(__dirname+'/node_modules'));
@@ -38,8 +39,11 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(flash());
+app.use('/profile', profile);
 app.use('/auth', auth);
 app.use('/', routes);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

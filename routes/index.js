@@ -10,4 +10,9 @@ router.get('/tournaments', function(req, res, next) {
   res.render('main/tournaments', { title: 'Tournaments' });
 });
 
+router.get('/tournaments/arrow', function(req, res, next) {
+  res.render('main/tournamentPage', { title: 'Tournaments' });
+});
+
+
 module.exports = router;
