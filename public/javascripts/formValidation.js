@@ -4,8 +4,6 @@ app.controller('registerValidation', function($scope){
 	$scope.SubmitForm = function(){
 		if($scope.regForm.$valid){
 
-		} else {
-			
 		}
 	}
 });

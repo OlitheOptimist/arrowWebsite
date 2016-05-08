@@ -1,7 +1,7 @@
 <% include ../include/indexTop %>
 <h1 style="margin-top: 0">Register</h1>
 <% include ../include/flashErrorMsg %>
-<script src="/mod/semantic-ui-dropdown/dropdown.min.js"></script>
+<script src="/mod/semantic-ui-dropdown/dropdown.js"></script>
 <link rel="stylesheet" href="/mod/semantic-ui-dropdown/dropdown.min.css">
 
 <script src="/mod/semantic-ui-transition/transition.min.js"></script>
@@ -10,42 +10,57 @@
 <script src="/mod/angular/angular.min.js"></script>
 <script src="/javascripts/formValidation.js"></script>
 
-<form name="regForm" ng-submit="SubmitForm" ng-app="validation" ng-controller="registerValidation" novalidate>
-    <p><label class="arrow-form">Name *</label>
-    <br>
-    <input ng-model="first_name" name="first_name" class="arrow-form" placeholder="First" style="width:47.5%;margin: 0 5% 0 0;" ng-class="{'has-error': regForm.first_name.$invalid && !regForm.first_name.$pristine}" required><input ng-model="last_name" name="last_name" placeholder="Last" class="arrow-form" style="width:47.5%;" required></p>
-
+<form name="regForm" ng-submit="SubmitForm()" ng-app="validation" ng-controller="registerValidation" novalidate>
+    <style>.name-div{float: left; width: 47.5%;}.name-div input {width: 100%;}</style>
+    <div style="width: 100%; display: inline-block">
+        <p style="margin: 0"><label class="arrow-form">Name *</label></p>
+        <div class="name-div" style="margin: 0 2.5% 2.5% 0;">
+            <input ng-model="reg.first_name" name="first_name" class="arrow-form" placeholder="First" ng-class="{true: 'has-error'}[reg.submitted && regForm.first_name.$invalid]" required>
+            <span ng-show="reg.submitted && regForm.first_name.$error.required">Required</span>
+        </div>
+        <div class="name-div" style="margin: 0 0 2.5% 2.5%;">
+            <input ng-class="{true: 'has-error'}[reg.submitted && regForm.last_name.$invalid]" ng-model="reg.last_name" name="last_name" placeholder="Last" class="arrow-form" required>
+            <span ng-show="reg.submitted && regForm.last_name.$error.required">Required</span>
+        </div>
+    </div>
     <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
         <label class="arrow-form">University</label>
-        <div class="ui fluid search selection dropdown" style="width:initial;">
-        <input class="arrow-form" type="hidden" ng-model="university" name="university">
-        <i class="dropdown icon"></i>
-        <div class="default text"></div>
-            <div class="menu">
+        <div class="arrow-form ui fluid search selection dropdown" style="width: initial;border: 0.5px solid #A9A9A9;padding: 0;height: 58px;border-radius: 0px; min-height: 0px;">
+        <input type="hidden" ng-model="reg.university" name="university">
+        <div class="default text" style="padding: 14px 10px; font-family: Arial"></div>
+            <div class="menu" >
                 <% include ../include/universityList %>
             </div>
         </div>
 
-        <p><label class="arrow-form">University Email</label>
-        <input type="email" ng-model="uni_email" name="uni_email" class="arrow-form"></p>
+        <div><label class="arrow-form">University Email</label>
+        <input type="email" ng-model="reg.uni_email" name="uni_email" class="arrow-form">
+        <span ng-show="reg.submitted && regForm.uni_email.$error.email">Invalid email</span>
+        </div>
     </div>
 
     <label class="arrow-form" style="margin-top: 1em">Contact Email *</label>
-    <p class="arrow-text" style="color: #3197ca">This email will be the primary way we contact you, it may be different to your university email</p>
-    <input type="email" ng-value="uni_email" name="email" ng-model="email" class="arrow-form" required>
+    <div class="arrow-text" style="color: #3197ca">This email will be the primary way we contact you, it may be different to your university email</div>
+    <input type="email" ng-value="uni_email" name="email" ng-model="reg.email" class="arrow-form" required ng-class="{true: 'has-error'}[reg.submitted && regForm.email.$invalid]">
+    <span ng-show="reg.submitted && regForm.email.$error.email">Invalid email</span>
+    <span ng-show="reg.submitted && regForm.email.$error.required">Required</span>
 
-    <p><label class="arrow-form">Password *</label>
-    <input ng-minlength="6" ng-model="register.password" type="password" class="arrow-form" name="password" required></p>
+    <div><label class="arrow-form">Password *</label>
+    <div class="arrow-text" style="color: #3197ca">Please make sure the password is greater than 6 characters</div>
+    <input ng-minlength="6" ng-model="reg.password" type="password" class="arrow-form" name="password" required ng-class="{true: 'has-error'}[reg.submitted && regForm.password.$invalid]">
+    <span ng-show="reg.submitted && regForm.password.$error.required">Required</span>
+    <span ng-show="reg.submitted && regForm.password.$error.minlength">Please have at least 6 characters</span>
+    </div>
 
-    <div class="form-group" ng-show="register.password.length > 0">
+    <div class="form-group" ng-show="reg.password.length > 0">
         <label class="arrow-form">Confirm Password *</label>
-         <input class="arrow-form" type="password" ng-model="register.verify" pw="register.password" required>
+         <input class="arrow-form" type="password" name="verify" ng-model="reg.verify" pw="reg.password" required>
          <span class="red" ng-show="regForm.verify.$error.pw">
           Passwords don't match!
          </span>
     </div>
 
-    <input type="submit" value="Create Account" class="arrow-button" style="margin-top: 2em;">
+    <input type="submit" value="Create Account" ng-click="reg.submitted=true" class="arrow-button" style="margin-top: 2em;">
 </form>
 <% include ../include/indexBottom %>
 

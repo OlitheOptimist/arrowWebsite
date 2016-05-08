@@ -110,6 +110,17 @@ hr {
     margin: 0.5em 1.5em 0.5em 0;
 }
 
+div.arrow-form{
+    padding: 10px;
+    font-size: 30px;
+    width: 100%;
+    box-sizing : border-box;
+}
+.drop-down-input{
+    padding: 10px !important;
+    font-size: 30px !important;
+}
+
 input.arrow-form, select.arrow-form{
     padding: 10px;
     font-size: 30px;
