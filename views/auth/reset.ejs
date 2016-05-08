@@ -1,12 +1,12 @@
 <% include ../include/indexTop %>
 <h1>Reset Password</h1>
-<% include include/flashErrorMsg %>
-<form>
+<% include ../include/flashErrorMsg %>
+<form method="post" action="/auth/reset/<%-token %>">
     <label class="arrow-form">Password</label>
-    <br><input class="arrow-form"></input>
+    <br><input name="password" type="password" class="arrow-form"></input>
     <br><br>
     <label class="arrow-form">Confirm Password</label>
-    <br><input class="arrow-form"></input>
+    <br><input type="password" class="arrow-form"></input>
     <input type="submit" class="arrow-button" value="Reset Password" style="margin-top: 2em;">
 </form>
 <% include ../include/indexBottom %>

@@ -1,0 +1,30 @@
+<% include ../include/indexTop %>
+<h1 style="margin-top: 0">Login</h1>
+<% include ../include/flashErrorMsg %>
+<% include ../include/flashSucMsg %>
+<form action="login" method="post">
+    <label class="arrow-form">Email</label>
+    <br><input name="email" class="arrow-form">
+    <br>
+    <br><label class="arrow-form">Password</label>
+    <br><input type="password" name="password" class="arrow-form">
+    <input type="submit" class="arrow-button" value="Login" style="margin-bottom: 0;">
+    <br>
+    <input type="checkbox" name="remember" style="display: none;">
+	<div style="display: block; margin: 16px 5px 0 0; float:left;" type="checkbox" class="arrow-checkbox"><i class="fa fa-check arrow-checkbox-tick" aria-hidden="true"></i></div>
+    <h4 id="rememberMe" style="cursor: pointer;">Remember Me</h4>
+</form>
+
+<a href="/auth/forgot"><h3 style="margin-bottom: 0em;color:#3197ca;">Reset Password</h3></a>
+<% include ../include/indexBottom %>
+
+<script>
+	$('.arrow-checkbox').click(function(){
+		$(this).toggleClass('arrow-checkbox-checked');
+        $('input[name=remember]').prop('checked', !$('input[name=remember]').prop("checked"));
+	});
+
+    $('#rememberMe').click(function(){
+        $('.arrow-checkbox').click();
+    })
+</script>

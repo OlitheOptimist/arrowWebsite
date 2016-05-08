@@ -3,30 +3,28 @@ var bcrypt = require('bcrypt-nodejs');
 var passportMongoose = require('passport-local-mongoose');
 
 var userSchema = new mongoose.Schema({
-	primaryEmail: {type: String, required: true},
-	uniEmail: String,
-	firstName: {type: String, required: true},
-	lastName: {type: String, required: true},
+	email: {type: String, required: true},
+	uni_email: {type:String, unique: true},
+	first_name: {type: String, required: true},
+	last_name: {type: String, required: true},
 	password: {type: String, required: true},
-	createdAt: Date,
-	updatedAt: Date,
-	resetToken: String,
-	resetTokenExpires: Date,
-	verifiedPrimaryEmail: {type: Boolean, default: false},
-	verifyPrimaryToken: String,
-	verifyPrimaryTokenExpires: Date,
-	verifiedUniEmail: {type: Boolean, default: false},
-	verifyUniToken: String,
-	verifyUniTokenExpires: Date
+	created_at: {type: Date, default: Date.now},
+	updated_at: Date,
+	reset_token: String,
+	reset_token_expires: Date,
+	verified_primary_email: {type: Boolean, default: false},
+	verify_primary_token: String,
+	verify_primary_token_expires: Date,
+	verified_uni_email: {type: Boolean, default: false},
+	verify_uni_token: String,
+	verify_uni_token_expires: Date,
+	steam_id: String,
+	university: Number
 });
 
 userSchema.pre('save',function(next){
 	var date = new Date();
-
-	this.updatedAt = date;
-	if(!this.createdAt){
-		this.createdAt = date;
-	}
+	this.updated_at = date;
 	next();
 });
 

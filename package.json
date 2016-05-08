@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "angular": "^1.5.5",
     "async": "latest",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.13.2",
@@ -25,6 +26,8 @@
     "passport-local": "latest",
     "passport-local-mongoose": "latest",
     "path": "latest",
+    "semantic-ui-dropdown": "^2.1.7",
+    "semantic-ui-transition": "^2.1.7",
     "serve-favicon": "~2.3.0"
   }
 }

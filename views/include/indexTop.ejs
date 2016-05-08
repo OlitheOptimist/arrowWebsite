@@ -15,10 +15,19 @@
         <span class="arroweSportsTitle">Arrow eSports</span>
     </div>
     <div>
-        <ul class="header">
-          <li class="header"><a class="header" href="/tournaments">Tournaments</a></li>
-          <li class="header"><a class="header" href="/about">About</a></li>
-          <li style="float:right;"class="header"><a class="header" href="/auth/signIn">Sign In</a></li>
+        <ul class="banner-header">
+            <li class="banner-header"><a class="banner-header" href="/">Home</a></li>
+            <li class="banner-header"><a class="banner-header" href="/tournaments">Tournaments</a></li>
+            <li class="banner-header"><a class="banner-header" href="/about">About</a></li>
+            <% if(user != null){ %>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/">My Profile</a></li>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/tournaments">My Tournaments</a></li>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/teams">My Teams</a></li>
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/logOut">Logout</a></li>
+            <% } else { %>
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/login">Login</a></li>   
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/register">Register</a></li>
+            <% } %>
         </ul>
-    </div>
-    <div style="padding: 2em;overflow: hidden;">
+</div>
+<div style="padding: 2em;overflow: hidden;">

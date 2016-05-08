@@ -1,0 +1,56 @@
+<% include ../include/indexTop %>
+<h1 style="margin-top: 0">Register</h1>
+<% include ../include/flashErrorMsg %>
+<script src="/mod/semantic-ui-dropdown/dropdown.min.js"></script>
+<link rel="stylesheet" href="/mod/semantic-ui-dropdown/dropdown.min.css">
+
+<script src="/mod/semantic-ui-transition/transition.min.js"></script>
+<link rel="stylesheet" href="/mod/semantic-ui-transition/transition.min.css">
+
+<script src="/mod/angular/angular.min.js"></script>
+<script src="/javascripts/formValidation.js"></script>
+
+<form name="regForm" ng-submit="SubmitForm" ng-app="validation" ng-controller="registerValidation" novalidate>
+    <p><label class="arrow-form">Name *</label>
+    <br>
+    <input ng-model="first_name" name="first_name" class="arrow-form" placeholder="First" style="width:47.5%;margin: 0 5% 0 0;" ng-class="{'has-error': regForm.first_name.$invalid && !regForm.first_name.$pristine}" required><input ng-model="last_name" name="last_name" placeholder="Last" class="arrow-form" style="width:47.5%;" required></p>
+
+    <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
+        <label class="arrow-form">University</label>
+        <div class="ui fluid search selection dropdown" style="width:initial;">
+        <input class="arrow-form" type="hidden" ng-model="university" name="university">
+        <i class="dropdown icon"></i>
+        <div class="default text"></div>
+            <div class="menu">
+                <% include ../include/universityList %>
+            </div>
+        </div>
+
+        <p><label class="arrow-form">University Email</label>
+        <input type="email" ng-model="uni_email" name="uni_email" class="arrow-form"></p>
+    </div>
+
+    <label class="arrow-form" style="margin-top: 1em">Contact Email *</label>
+    <p class="arrow-text" style="color: #3197ca">This email will be the primary way we contact you, it may be different to your university email</p>
+    <input type="email" ng-value="uni_email" name="email" ng-model="email" class="arrow-form" required>
+
+    <p><label class="arrow-form">Password *</label>
+    <input ng-minlength="6" ng-model="register.password" type="password" class="arrow-form" name="password" required></p>
+
+    <div class="form-group" ng-show="register.password.length > 0">
+        <label class="arrow-form">Confirm Password *</label>
+         <input class="arrow-form" type="password" ng-model="register.verify" pw="register.password" required>
+         <span class="red" ng-show="regForm.verify.$error.pw">
+          Passwords don't match!
+         </span>
+    </div>
+
+    <input type="submit" value="Create Account" class="arrow-button" style="margin-top: 2em;">
+</form>
+<% include ../include/indexBottom %>
+
+<script>
+$('.ui.dropdown')
+  .dropdown()
+;
+</script>

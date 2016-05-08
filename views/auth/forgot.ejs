@@ -1,10 +1,10 @@
 <% include ../include/indexTop %>
 <h1>Forgotten Password</h1>
-<% include include/flashErrorMsg %>
-<% include include/flashSucMsg %>
-<form>
+<% include ../include/flashErrorMsg %>
+<% include ../include/flashSucMsg %>
+<form method="post" action="/auth/forgot">
     <label class="arrow-form">Email Address</label>
-    <br><input class="arrow-form"></input>
+    <br><input name="email" class="arrow-form"></input>
     <input type="submit" class="arrow-button" value="Request Password" style="margin-top: 2em;">
 </form>
 <% include ../include/indexBottom %>

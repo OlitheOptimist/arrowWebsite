@@ -10,6 +10,19 @@ h3 {
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
 }
+h4{
+    font-family: sans-serif;
+    color: #3197ca;
+}
+.has-error{
+    border: 1px solid red !important;
+    outline:none;
+}
+p.arrow-text{
+    font-family: sans-serif;
+    margin: 0;
+    font-size: 12px;
+}
 body {
     background-color: black;
     margin-top: 0;
@@ -47,23 +60,26 @@ div.bottomIcons {
     float: left;
     text-align: center;
 }
-ul.header {
+ul.banner-header {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
 }
+li.banner-header-loggedin{
+    background-color: #382E50;
+}
 
-li.header {
+li.banner-header {
     float: left;
 }
 
-li.header a.header:hover {
+li.banner-header a.banner-header:hover {
     background-color: #3197ca;
 }
 
-li.header a.header {
+li.banner-header a.banner-header {
     display: block;
     color: white;
     text-align: center;
@@ -93,7 +109,8 @@ hr {
     font-size: 1.25em;
     margin: 0.5em 1.5em 0.5em 0;
 }
-input.arrow-form{
+
+input.arrow-form, select.arrow-form{
     padding: 10px;
     font-size: 30px;
     width: 100%;
@@ -113,6 +130,7 @@ label.arrow-form{
     color: white;
     text-align: left;
     font-size: 15px;
+    margin: 2em 0 2em 0;
 }
 div.sign-upbox{
     width: 30%;
@@ -121,4 +139,18 @@ div.sign-upbox{
     margin: 1em;
     box-shadow: 10px 10px 5px #888888;
     float:left;
+}
+.arrow-checkbox{
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.arrow-checkbox-checked{
+    background-color: #3197ca;
+}
+.arrow-checkbox-tick{
+    font-size: 24px;
+    color: white;
 }

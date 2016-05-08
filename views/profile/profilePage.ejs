@@ -1,7 +1,42 @@
 <% include ../include/indexTop %>
-<h1>Person Name - Not Verified</h1>
-<p>Email: example@example.com</p>
-<p>Univserity Email: example@example.ac.uk</p>
+<style>
+    .tournament-box{
+      background-color: #242629;
+      padding: 30px;
+      margin: 1em;
+      text-align: center;
+      cursor:pointer;
+    }
+    .tournament-box:hover{
+      border: solid 15px #3197ca;
+      padding: 15px;
+    }
+    .team-box{
+      float:left;
+      width:30%;
+      margin: 1em;
+      background-color: #242629;
+      padding: 40px;
+      
+      cursor: pointer;
+    }
+    .team-box:hover{
+      border: solid 10px #3197ca;
+      padding: 30px;
+    }
+</style>
+<% if(infoMsg.length > 0){ %>
+	<%- infoMsg %>
+<% } %>
+<% if(!user.verified_primary_email ){ %>
+	You have been sent a verificaiton email, to resend click <a href="/auth/verify/email/id/<%-user._id %>">here</a>
+<% } %>
+<% if(!user.verified_uni_email ){ %>
+	You have been sent a verificaiton to your uni email, to resend click <a href="/auth/verify/uni_email/id/<%-user._id %>">here</a>
+<% } %>
+<h1><%- user.first_name %> <%- user.last_name %> - Not Verified</h1>
+<p>Email: <%- user.email%> </p>
+<p>Univserity Email: <%- user.uni_email %></p>
 
 <h2>Current Tournaments</h2>
 
