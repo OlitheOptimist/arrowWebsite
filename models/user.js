@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var passportMongoose = require('passport-local-mongoose');
+var University = require('../models/university');
 
 var userSchema = new mongoose.Schema({
 	email: {type: String, required: true},
@@ -19,7 +20,10 @@ var userSchema = new mongoose.Schema({
 	verify_uni_token: String,
 	verify_uni_token_expires: Date,
 	steam_id: String,
-	university: Number
+	university: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'University'
+	}
 });
 
 userSchema.pre('save',function(next){

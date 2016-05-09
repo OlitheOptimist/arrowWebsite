@@ -8,8 +8,9 @@ var async = require('async');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport("smtps://ctmalexbatorykleliw%40gmail.com:ntR759Cf-@smtp.gmail.com");
-
+var University = require('../models/university');
 var Common = require('./common');
+
 /* Authentication */
 var isValidPassword = function(user, password)
 {
@@ -320,10 +321,19 @@ app.get('/register', Common.isNotLogged(), function(req, res){
     });
 });
 
-/* GET requests */
 app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/auth/login');
+});
+
+// Route to retrieve all valid universities from the DB
+app.get('/valid/university', function(req, res, next){
+    University.find({}, function(err, list){
+        if(err)
+            return next(err);
+        
+        res.send(list);
+    });
 });
 
 /* POST requests */

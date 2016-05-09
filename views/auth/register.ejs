@@ -1,11 +1,6 @@
 <% include ../include/indexTop %>
 <h1 style="margin-top: 0">Register</h1>
 <% include ../include/flashErrorMsg %>
-<!-- <script src="/mod/semantic-ui-dropdown/dropdown.js"></script>
-<link rel="stylesheet" href="/mod/semantic-ui-dropdown/dropdown.min.css">
-
-<script src="/mod/semantic-ui-transition/transition.min.js"></script>
-<link rel="stylesheet" href="/mod/semantic-ui-transition/transition.min.css"> -->
 
 <script src="/mod/angular/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
@@ -56,13 +51,13 @@
     <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
         <label class="arrow-form">University</label>
 
-  <ui-select ng-model="university.selected" theme="selectize" ng-disabled="disabled">
-    <ui-select-match>{{$select.selected.name}}</ui-select-match>
-    <ui-select-choices repeat="university in uniList | filter: $select.search">
-      <span ng-bind-html="university.name | highlight: $select.search"></span>
-      <small ng-bind-html="university.code | highlight: $select.search"></small>
-    </ui-select-choices>
-  </ui-select>
+    <ui-select ng-model="reg.university" theme="selectize" ng-disabled="disabled">
+        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="university in uniList | filter: $select.search">
+            <span ng-bind-html="university.name | highlight: $select.search"></span>
+            <small ng-bind-html="university.code | highlight: $select.search"></small>
+        </ui-select-choices>
+    </ui-select>
 
         <div><label class="arrow-form">University Email</label>
         <input type="email" ng-model="reg.uni_email" name="uni_email" class="arrow-form">
@@ -94,9 +89,3 @@
     <input type="submit" value="Create Account" ng-click="reg.submitted=true" class="arrow-button" style="margin-top: 2em;">
 </form>
 <% include ../include/indexBottom %>
-
-<script>
-// $('.ui.dropdown')
-//   .dropdown()
-// ;
-</script>

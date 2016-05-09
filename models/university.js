@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 var uniSchema = new mongoose.Schema({
 	name: {type: String, required: true},
-	abreviation: String,
-	teams: {type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
-	users: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	code: String,
+	// teams: {type: mongoose.Schema.Types.ObjectId, ref: 'Team'},
+	// users: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	created_at: {type: Date, default: Date.now},
 	updated_at: Date
 });
