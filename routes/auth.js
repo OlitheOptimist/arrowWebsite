@@ -53,14 +53,18 @@ function(req, email, password, done){
             if(err)
                 return done(err);
             if(user)
-                return done(null, false, req.flash('errMsg', 'That email is taken.'));
+                return done(null, false, req.flash('errMsg', 'That email is taken. Please try again.'));
+            if(req.body.university)
+                if(!Common.checkUni(req.body.university))
+                    return done(null, false, req.flash('errMsg', 'That is not a valid university. Please try again.'));
             else
             {
                 var newUser = new User();
                 newUser.email = email;
                 newUser.verify_primary_token = crypto.randomBytes(20).toString('hex');
                 newUser.verify_primary_token_expires = Date.now() + 7200000;;
-                if(req.body.uni_email){
+                if(req.body.uni_email)
+                {
                     newUser.uni_email = req.body.uni_email;
                     newUser.verify_uni_token = crypto.randomBytes(20).toString('hex');
                     newUser.verify_uni_token_expires = Date.now() + 7200000;;
@@ -68,8 +72,9 @@ function(req, email, password, done){
                 newUser.password = newUser.generateHash(password);
                 newUser.first_name = req.body.first_name;
                 newUser.last_name = req.body.last_name;
+                if(req.body.university)
+                    newUser.university = req.body.university;
 
-                console.log(newUser);
                 newUser.save(function(err){
                     if(err)
                         throw err;
@@ -331,7 +336,7 @@ app.get('/valid/university', function(req, res, next){
     University.find({}, function(err, list){
         if(err)
             return next(err);
-        
+
         res.send(list);
     });
 });

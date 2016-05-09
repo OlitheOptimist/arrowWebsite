@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
 
-<form name="regForm" ng-submit="SubmitForm()" ng-app="validation" ng-controller="registerValidation" novalidate>
+<form name="regForm" ng-app="validation" ng-controller="registerValidation" novalidate method="post" action='register'>
 
     <style>
     .name-div{float: left; width: 47.5%;}.name-div input {width: 100%;}
@@ -51,7 +51,8 @@
     <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
         <label class="arrow-form">University</label>
 
-    <ui-select ng-model="reg.university" theme="selectize" ng-disabled="disabled">
+    <input type="hidden" ng-value="reg.university._id" name="university">
+    <ui-select ng-model="reg.university" name="selUni" theme="selectize">
         <ui-select-match>{{$select.selected.name}}</ui-select-match>
         <ui-select-choices repeat="university in uniList | filter: $select.search">
             <span ng-bind-html="university.name | highlight: $select.search"></span>
@@ -86,6 +87,7 @@
          </span>
     </div>
 
-    <input type="submit" value="Create Account" ng-click="reg.submitted=true" class="arrow-button" style="margin-top: 2em;">
+    <input type="button" value="Create Account" ng-click="SubmitForm()" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$invalid">
+    <input type="submit" value="Create Account for real" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$valid">
 </form>
 <% include ../include/indexBottom %>

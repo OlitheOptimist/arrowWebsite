@@ -37,11 +37,10 @@ app.controller('registerValidation', function($scope, $http){
 
 	$scope.SubmitForm = function()
 	{
-		
+		$scope.reg.submitted = true;
 		if($scope.regForm.$valid){
-			if($scope.reg.university)
-				$scope.reg.university = $scope.reg.university._id;
-			console.log("Yes");
+
+			//$http.post('register', $scope.reg);
 		}
 		console.log($scope.reg);
 	}
