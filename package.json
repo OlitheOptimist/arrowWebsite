@@ -28,6 +28,7 @@
     "path": "latest",
     "semantic-ui-dropdown": "^2.1.7",
     "semantic-ui-transition": "^2.1.7",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "ui-select": "^0.16.1"
   }
 }

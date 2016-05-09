@@ -1,17 +1,47 @@
 <% include ../include/indexTop %>
 <h1 style="margin-top: 0">Register</h1>
 <% include ../include/flashErrorMsg %>
-<script src="/mod/semantic-ui-dropdown/dropdown.js"></script>
+<!-- <script src="/mod/semantic-ui-dropdown/dropdown.js"></script>
 <link rel="stylesheet" href="/mod/semantic-ui-dropdown/dropdown.min.css">
 
 <script src="/mod/semantic-ui-transition/transition.min.js"></script>
-<link rel="stylesheet" href="/mod/semantic-ui-transition/transition.min.css">
+<link rel="stylesheet" href="/mod/semantic-ui-transition/transition.min.css"> -->
 
 <script src="/mod/angular/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+
 <script src="/javascripts/formValidation.js"></script>
+<script src="/mod/ui-select/dist/select.min.js"></script>
+<link rel="stylesheet" href="/mod/ui-select/dist/select.min.css" />
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
 
 <form name="regForm" ng-submit="SubmitForm()" ng-app="validation" ng-controller="registerValidation" novalidate>
-    <style>.name-div{float: left; width: 47.5%;}.name-div input {width: 100%;}</style>
+
+    <style>
+    .name-div{float: left; width: 47.5%;}.name-div input {width: 100%;}
+            .select2 > .select2-choice.ui-select-match {
+            /* Because of the inclusion of Bootstrap */
+            height: 29px;
+        }
+
+        .selectize-control > .selectize-dropdown {
+            top: 36px;
+        }
+        /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+        .select-box {
+          background: #fff;
+          position: relative;
+          z-index: 1;
+        }
+        .alert-info.positioned {
+          margin-top: 1em;
+          position: relative;
+          z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+        }
+        .selectize-control.single .selectize-input:after {display: none;}
+    </style>
     <div style="width: 100%; display: inline-block">
         <p style="margin: 0"><label class="arrow-form">Name *</label></p>
         <div class="name-div" style="margin: 0 2.5% 2.5% 0;">
@@ -25,13 +55,14 @@
     </div>
     <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
         <label class="arrow-form">University</label>
-        <div class="arrow-form ui fluid search selection dropdown" style="width: initial;border: 0.5px solid #A9A9A9;padding: 0;height: 58px;border-radius: 0px; min-height: 0px;">
-        <input type="hidden" ng-model="reg.university" name="university">
-        <div class="default text" style="padding: 14px 10px; font-family: Arial"></div>
-            <div class="menu" >
-                <% include ../include/universityList %>
-            </div>
-        </div>
+
+  <ui-select ng-model="university.selected" theme="selectize" ng-disabled="disabled">
+    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="university in uniList | filter: $select.search">
+      <span ng-bind-html="university.name | highlight: $select.search"></span>
+      <small ng-bind-html="university.code | highlight: $select.search"></small>
+    </ui-select-choices>
+  </ui-select>
 
         <div><label class="arrow-form">University Email</label>
         <input type="email" ng-model="reg.uni_email" name="uni_email" class="arrow-form">
@@ -65,7 +96,7 @@
 <% include ../include/indexBottom %>
 
 <script>
-$('.ui.dropdown')
-  .dropdown()
-;
+// $('.ui.dropdown')
+//   .dropdown()
+// ;
 </script>

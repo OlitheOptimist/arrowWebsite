@@ -1,11 +1,66 @@
-var app = angular.module('validation', []);
+'use strict';
 
-app.controller('registerValidation', function($scope){
-	$scope.SubmitForm = function(){
+var app = angular.module('validation', ['ngSanitize', 'ui.select']);
+
+app.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
+
+    if (angular.isArray(items)) {
+      items.forEach(function(item) {
+        var itemMatches = false;
+
+        var keys = Object.keys(props);
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
+        }
+
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
+
+    return out;
+  }
+});
+
+app.controller('registerValidation', function($scope, $http){
+	$scope.SubmitForm = function()
+    {
 		if($scope.regForm.$valid){
 
 		}
 	}
+
+    $scope.disabled = undefined;
+
+  $scope.enable = function() {
+    $scope.disabled = false;
+  };
+
+  $scope.disable = function() {
+    $scope.disabled = true;
+  };
+
+  $scope.clear = function() {
+    $scope.university.selected = undefined;
+  };
+
+
+  $scope.university = {};
+  $scope.uniList = [ 
+    {name: 'Loughborough', code: 'LB'},
+    {name: 'Bath', code: 'BAD'}];
+
 });
 
 app.directive('pw', function(){
