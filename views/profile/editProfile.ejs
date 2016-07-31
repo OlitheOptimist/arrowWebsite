@@ -1,0 +1,131 @@
+<% include ../include/indexTop %>
+<script src="/mod/angular/angular.min.js"></script>
+<script src="/javascripts/editProfile.js"></script>
+<script>
+var user = <%- JSON.stringify(user) %>;
+</script>
+<style>
+    .name-div{
+        float: left; width: 47.5%;
+    }
+    .name-div input {
+        width: 100%;
+    }
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+    /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+    .select-box {
+      background: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .alert-info.positioned {
+      margin-top: 1em;
+      position: relative;
+      z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+    }
+    .selectize-control.single .selectize-input:after {
+        display: none;
+    }
+    .ui-select-container div.selectize-input {
+       border-radius: 0;
+       background: none !important;
+       padding: 10px;
+       height: 49px;
+    }
+    .ui-select-container div.selectize-input input{
+       width: 100%;
+       font-size: 17px;
+       padding: 10px;
+    }
+    .ui-select-container div.selectize-input div {
+       padding: 7px 0;
+    }
+    .ui-select-container div.selectize-input div span {
+       font-size: 17px;
+    }
+</style>
+<div ng-controller="profileControl" ng-app="profile">
+<form name="editName" novalidate ng-submit="changeName(editName.$valid)">
+    <h2>Change Name</h2>
+    <div ng-show="successName" class="sucMsg"><span>Name Successfully Changed</span></div>
+    <div style="width: 100%; display: inline-block">
+        <div class="name-div" style="margin: 0 2.5% 0 0;">
+            <input ng-model="name.first_name" class="arrow-form" placeholder="First" ng-class="{true: 'has-error'}[name.submitted && editName.first_name.$invalid]" required name="first_name">
+            <div class="error-msg" ng-show="name.submitted && editName.first_name.$error.required">
+                <span class="error-msg">Required</span>
+            </div>
+        </div>
+        <div class="name-div" style="margin: 0 0 0 2.5%;">
+            <input ng-class="{true: 'has-error'}[name.submitted && editName.last_name.$invalid]" ng-model="name.last_name" placeholder="Last" class="arrow-form" required name="last_name">
+            <div class="error-msg" ng-show="name.submitted && editName.last_name.$error.required">
+                <span class="error-msg">Required</span>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" value="Save" class="arrow-button" style="margin-top: 2em;">
+</form>
+
+<hr class="large">
+
+<form name="editEmail" method="post" action='register'>
+    <h2>Change Email</h2>
+    <label class="arrow-form">Contact Email</label>
+    <div class="arrow-text" style="color: #3197ca">This email will be the primary way we contact you, it may be different to your university email</div>
+    <input type="email" name="email" ng-model="email.email" class="arrow-form" required ng-class="{true: 'has-error'}[email.submitted && editEmail.email.$invalid]" value="<%-user.email%>">
+    <div class="error-msg" ng-show="email.submitted && editEmail.email.$error.email">
+        <span class="error-msg">Invalid email</span>
+    </div>
+    <div class="error-msg" ng-show="email.submitted && editEmail.email.$error.required">
+        <span class="error-msg" >Required</span>
+    </div>
+
+    <input type="submit" ng-disabled="editEmail.$invalid" value="Save" class="arrow-button" style="margin-top: 2em;">
+</form>
+
+<hr class="large">
+
+<form name="editPassword" method="post" action='register'>
+
+    <h2>Change Password</h2>
+    <div><label class="arrow-form">Current Password</label>
+        <div class="arrow-text" style="color: #3197ca">Please make sure the password is greater than 6 characters</div>
+        <input ng-minlength="6" ng-model="pass.password" type="password" class="arrow-form" name="password" required ng-class="{true: 'has-error'}[pass.submitted && editPassword.password.$invalid]">
+        <div class="error-msg" ng-show="pass.submitted && editPassword.password.$error.required">
+            <span class="error-msg" >Required</span>
+        </div>
+        <div class="error-msg" ng-show="pass.submitted && editPassword.password.$error.minlength">
+            <span class="error-msg" >Please have at least 6 characters</span>
+        </div>
+    </div>
+
+    <div><label class="arrow-form">New Password</label>
+        <div class="arrow-text" style="color: #3197ca">Please make sure the password is greater than 6 characters</div>
+        <input ng-minlength="6" ng-model="pass.password" type="password" class="arrow-form" name="password" required ng-class="{true: 'has-error'}[pass.submitted && editPassword.password.$invalid]">
+        <div class="error-msg" ng-show="pass.submitted && editPassword.password.$error.required">
+            <span class="error-msg" >Required</span>
+        </div>
+        <div class="error-msg" ng-show="pass.submitted && editPassword.password.$error.minlength">
+            <span class="error-msg" >Please have at least 6 characters</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-show="pass.password.length > 0">
+        <label class="arrow-form">Confirm Password</label>
+         <input class="arrow-form" type="password" name="verify" ng-model="pass.verify" pw="pass.password" required>
+         <div class="error-msg" ng-show="editPassword.verify.$error.pw">
+            <span class="error-msg">Passwords don't match!</span>
+         </div>
+    </div>
+
+    <input type="submit" ng-disabled="editPassword.$invalid" value="Save" class="arrow-button" style="margin-top: 2em;">
+</form>
+</div>
+<% include ../include/indexBottom %>

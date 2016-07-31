@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('validation', ['ngSanitize', 'ui.select']);
+var app = angular.module('validation', ['ngSanitize', 'ui.select'])
 
 app.filter('propsFilter', function() {
 	return function(items, props) {
@@ -34,26 +34,14 @@ app.filter('propsFilter', function() {
 });
 
 app.controller('registerValidation', function($scope, $http){
-
-	$scope.SubmitForm = function()
-	{
-		$scope.reg.submitted = true;
-		if($scope.regForm.$valid){
-
-			//$http.post('register', $scope.reg);
-		}
-		console.log($scope.reg);
-	}
-
 	// Uni List native functions/variables
 	$scope.reg = { university: undefined };
+	$scope.reg.email = $scope.reg.uni_email;
 	$scope.disabled = undefined;
 	$scope.enable = function(){ $scope.disabled = false; };
 	$scope.disable = function(){ $scope.disabled = true; };
 	$scope.clear = function(){};
 
-
-	$scope.university = {};
 	$scope.uniList = [];
 	$http.get('valid/university').then(
 		function(res){
@@ -64,28 +52,33 @@ app.controller('registerValidation', function($scope, $http){
 		}
 	);
 
+	$scope.autofill = function(){
+		if(angular.element('input[name=email]').hasClass('ng-pristine'))
+			$scope.reg.email = $scope.reg.uni_email;
+	}
+
 });
 
 app.directive('pw', function(){
-		return {
-				require: 'ngModel',
-				link: function (scope, elem, attrs, model){
-						if(!attrs.pw)
-								return;
-						scope.$watch(attrs.pw, function(value){
-								if(model.$viewValue !== undefined && model.$viewValue !== '')
-										model.$setValidity('pw', value === model.$viewValue);
-						});
-						model.$parsers.push(function(value){
-								if (value === undefined || value === '')
-								{
-										model.$setValidity('pw', true);
-										return value;
-								}
-								var isValid = value === scope.$eval(attrs.pw);
-								model.$setValidity('pw', isValid);
-								return isValid ? value : undefined;
-						});
+	return {
+		require: 'ngModel',
+		link: function (scope, elem, attrs, model){
+			if(!attrs.pw)
+				return;
+			scope.$watch(attrs.pw, function(value){
+				if(model.$viewValue !== undefined && model.$viewValue !== '')
+					model.$setValidity('pw', value === model.$viewValue);
+			});
+			model.$parsers.push(function(value){
+				if (value === undefined || value === '')
+				{
+					model.$setValidity('pw', true);
+					return value;
 				}
-		};
+				var isValid = value === scope.$eval(attrs.pw);
+				model.$setValidity('pw', isValid);
+				return isValid ? value : undefined;
+			});
+		}
+	};
 });

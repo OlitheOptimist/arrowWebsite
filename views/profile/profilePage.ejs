@@ -1,4 +1,7 @@
 <% include ../include/indexTop %>
+<script src="/mod/angular/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+<script src="/javascripts/profilePage.js"></script>
 <style>
     .tournament-box{
       background-color: #242629;
@@ -25,72 +28,77 @@
       padding: 30px;
     }
 </style>
-<% if(infoMsg.length > 0){ %>
-	<%- infoMsg %>
-<% } %>
-<% if(!user.verified_primary_email ){ %>
-	You have been sent a verificaiton email, to resend click <a href="/auth/verify/email/id/<%-user._id %>">here</a>
-<% } %>
-<% if(!user.verified_uni_email ){ %>
-	You have been sent a verificaiton to your uni email, to resend click <a href="/auth/verify/uni_email/id/<%-user._id %>">here</a>
-<% } %>
-<h1><%- user.first_name %> <%- user.last_name %> - Not Verified</h1>
-<p>Email: <%- user.email%> </p>
-<p>Univserity Email: <%- user.uni_email %></p>
+<div ng-app="profile" ng-controller="profileCtrl">
+	<script>
+	var user = <%- JSON.stringify(user) %>;
+	</script>
+	<% if(infoMsg.length > 0){ %>
+		<div class="infoMsg"><span><%- infoMsg %></span></div>
+	<% } %>
+	<% if(!user.verified_primary_email ){ %>
+		<div class="infoMsg"><span>You have been sent a verificaiton email, to resend click <a href="/auth/verify/email/id/<%-user._id %>">here</a></span></div>
+	<% } %>
+	<% if(!user.verified_uni_email ){ %>
+		<div class="infoMsg"><span>You have been sent a verificaiton to your uni email, to resend click <a href="/auth/verify/uni_email/id/<%-user._id %>">here</a></span></div>
+	<% } %>
+	<h2 style="float:right;"><a href="profile/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
+	<h1 style="margin-bottom: 0;"><%- user.first_name %> <%- user.last_name %></h1>
+	<h4 style="margin: 0">{{user.uni_name}}</h4 >
+	<h4 style="margin: 0"><%- user.uni_email %></h4 >
 
-<h2>Current Tournaments</h2>
+	<h2>Current Tournaments</h2>
 
-<div class="tournament-box">
-	<h2>Arrow eSports Season 6</h2>
-	<h2>Dota 2</h2>
+	<div class="tournament-box">
+		<h2>Arrow eSports Season 6</h2>
+		<h2>Dota 2</h2>
+	</div>
+
+	<div class="tournament-box">
+		<h2>Arrow eSports Season 6</h2>
+		<h2>Rocket League</h2>
+	</div>
+
+	<div class="tournament-box">
+		<h2>Arrow eSports Season 6</h2>
+		<h2>Overwatch</h2>
+	</div>
+
+	<h2>Current Teams</h2>
+
+	<div class="team-box">
+		<h2>Team A</h2>
+		<h3>Player 1 - Carry</h3>
+		<h3>Player 2 - Mid</h3>
+		<h3>Player 3 - Offlane</h3>
+		<h3>Player 4 - Support</h3>
+		<h3>Player 5 - Support</h3>
+	</div>
+
+	<div class="team-box">
+		<h2>Team B</h2>
+		<h3>Player 1 - Carry</h3>
+		<h3>Player 2 - Mid</h3>
+		<h3>Player 3 - Offlane</h3>
+		<h3>Player 4 - Support</h3>
+		<h3>Player 5 - Support</h3>
+	</div>
+
+	<div class="team-box">
+		<h2>Team C</h2>
+		<h3>Player 1 - Carry</h3>
+		<h3>Player 2 - Mid</h3>
+		<h3>Player 3 - Offlane</h3>
+		<h3>Player 4 - Support</h3>
+		<h3>Player 5 - Support</h3>
+	</div>
+
+	<div class="team-box">
+		<h2>Team D</h2>
+		<h3>Player 1 - Carry</h3>
+		<h3>Player 2 - Mid</h3>
+		<h3>Player 3 - Offlane</h3>
+		<h3>Player 4 - Support</h3>
+		<h3>Player 5 - Support</h3>
+	</div>
 </div>
-
-<div class="tournament-box">
-	<h2>Arrow eSports Season 6</h2>
-	<h2>Rocket League</h2>
-</div>
-
-<div class="tournament-box">
-	<h2>Arrow eSports Season 6</h2>
-	<h2>Overwatch</h2>
-</div>
-
-<h2>Current Teams</h2>
-
-<div class="team-box">
-	<h2>Team A</h2>
-	<h3>Player 1 - Carry</h3>
-	<h3>Player 2 - Mid</h3>
-	<h3>Player 3 - Offlane</h3>
-	<h3>Player 4 - Support</h3>
-	<h3>Player 5 - Support</h3>
-</div>
-
-<div class="team-box">
-	<h2>Team B</h2>
-	<h3>Player 1 - Carry</h3>
-	<h3>Player 2 - Mid</h3>
-	<h3>Player 3 - Offlane</h3>
-	<h3>Player 4 - Support</h3>
-	<h3>Player 5 - Support</h3>
-</div>
-
-<div class="team-box">
-	<h2>Team C</h2>
-	<h3>Player 1 - Carry</h3>
-	<h3>Player 2 - Mid</h3>
-	<h3>Player 3 - Offlane</h3>
-	<h3>Player 4 - Support</h3>
-	<h3>Player 5 - Support</h3>
-</div>
-
-<div class="team-box">
-	<h2>Team D</h2>
-	<h3>Player 1 - Carry</h3>
-	<h3>Player 2 - Mid</h3>
-	<h3>Player 3 - Offlane</h3>
-	<h3>Player 4 - Support</h3>
-	<h3>Player 5 - Support</h3>
-</div>
-
 <% include ../include/indexBottom %>

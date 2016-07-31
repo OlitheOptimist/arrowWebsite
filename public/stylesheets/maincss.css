@@ -6,6 +6,10 @@ h2 {
     font-family: sans-serif;
     color: #3197ca;
 }
+p{
+    font-family: sans-serif;
+    font-size: 14px;
+}
 h3 {
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
@@ -14,9 +18,24 @@ h4{
     font-family: sans-serif;
     color: #3197ca;
 }
-.has-error{
-    border: 1px solid red !important;
+a{
+    color: inherit;
+}
+input.has-error{
+    border: 1px solid #DC2F2F !important;
     outline:none;
+}
+div.error-msg{
+    border: 1px solid #9C0606;
+    background-color: #FFD1D1;
+    border-top: none;
+    padding: 5px 10px;
+    display: inline-block;
+}
+span.error-msg{
+    font-family: 'Passion One', cursive;
+    font-size: 20px;
+    color: #DC2F2F;
 }
 p.arrow-text{
     font-family: sans-serif;
@@ -104,6 +123,9 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
+hr.large{
+    margin: 1em 0;
+}
 .icons {
     color: #3197ca;
     font-size: 1.25em;
@@ -112,7 +134,7 @@ hr {
 
 div.arrow-form{
     padding: 10px;
-    font-size: 30px;
+    font-size: 17px;
     width: 100%;
     box-sizing : border-box;
 }
@@ -123,7 +145,7 @@ div.arrow-form{
 
 input.arrow-form, select.arrow-form{
     padding: 10px;
-    font-size: 30px;
+    font-size: 17px;
     width: 100%;
     box-sizing : border-box;
 }
@@ -164,4 +186,43 @@ div.sign-upbox{
 .arrow-checkbox-tick{
     font-size: 24px;
     color: white;
+}
+div.infoMsg:before, div.sucMsg:before, div.errMsg:before{
+    font-family: FontAwesome;
+    font-size: 24px;
+    padding-right: 10px;
+}
+div.infoMsg, div.sucMsg, div.errMsg{
+    padding: 10px;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 13px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+div.infoMsg:before{
+    color: #3197CA;
+    content: "\f12a";
+}
+div.infoMsg{
+    border: 2px solid #3197ca;
+    background-color: #C8F2FF;
+}
+div.sucMsg:before{
+    color: #35AF4F;
+    content: "\f00c";
+}
+div.sucMsg{
+    border: 2px solid #35AF4F;
+    background-color: #78FF95;
+}
+div.errMsg:before{
+    color: #FF3535;
+    content: "\f00d";
+}
+div.errMsg{
+    border: 2px solid #FF3535;
+    background-color: #FF7878;
 }

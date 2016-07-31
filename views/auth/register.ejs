@@ -8,51 +8,78 @@
 <script src="/javascripts/formValidation.js"></script>
 <script src="/mod/ui-select/dist/select.min.js"></script>
 <link rel="stylesheet" href="/mod/ui-select/dist/select.min.css" />
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+
+<style>
+    .name-div{
+        float: left; width: 47.5%;
+    }
+    .name-div input {
+        width: 100%;
+    }
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+    /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+    .select-box {
+      background: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .alert-info.positioned {
+      margin-top: 1em;
+      position: relative;
+      z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+    }
+    .selectize-control.single .selectize-input:after {
+        display: none;
+    }
+    .ui-select-container div.selectize-input {
+       border-radius: 0;
+       background: none !important;
+       padding: 10px;
+       height: 49px;
+    }
+    .ui-select-container div.selectize-input input{
+       width: 100%;
+       font-size: 17px;
+       padding: 10px;
+    }
+    .ui-select-container div.selectize-input div {
+       padding: 7px 0;
+    }
+    .ui-select-container div.selectize-input div span {
+       font-size: 17px;
+    }
+</style>
 
 <form name="regForm" ng-app="validation" ng-controller="registerValidation" novalidate method="post" action='register'>
-
-    <style>
-    .name-div{float: left; width: 47.5%;}.name-div input {width: 100%;}
-            .select2 > .select2-choice.ui-select-match {
-            /* Because of the inclusion of Bootstrap */
-            height: 29px;
-        }
-
-        .selectize-control > .selectize-dropdown {
-            top: 36px;
-        }
-        /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
-        .select-box {
-          background: #fff;
-          position: relative;
-          z-index: 1;
-        }
-        .alert-info.positioned {
-          margin-top: 1em;
-          position: relative;
-          z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
-        }
-        .selectize-control.single .selectize-input:after {display: none;}
-    </style>
     <div style="width: 100%; display: inline-block">
         <p style="margin: 0"><label class="arrow-form">Name *</label></p>
-        <div class="name-div" style="margin: 0 2.5% 2.5% 0;">
+        <div class="name-div" style="margin: 0 2.5% 0 0;">
             <input ng-model="reg.first_name" name="first_name" class="arrow-form" placeholder="First" ng-class="{true: 'has-error'}[reg.submitted && regForm.first_name.$invalid]" required>
-            <span ng-show="reg.submitted && regForm.first_name.$error.required">Required</span>
+            <div class="error-msg" ng-show="reg.submitted && regForm.first_name.$error.required">
+                <span class="error-msg">Required</span>
+            </div>
         </div>
-        <div class="name-div" style="margin: 0 0 2.5% 2.5%;">
+        <div class="name-div" style="margin: 0 0 0 2.5%;">
             <input ng-class="{true: 'has-error'}[reg.submitted && regForm.last_name.$invalid]" ng-model="reg.last_name" name="last_name" placeholder="Last" class="arrow-form" required>
-            <span ng-show="reg.submitted && regForm.last_name.$error.required">Required</span>
+            <div class="error-msg" ng-show="reg.submitted && regForm.last_name.$error.required">
+                <span class="error-msg">Required</span>
+            </div>
         </div>
     </div>
-    <div style="border: 2px solid black; padding: 1em;border-radius: 12px;margin-bottom: 1em">
-        <label class="arrow-form">University</label>
-
+    
+    <label class="arrow-form">University</label>
     <input type="hidden" ng-value="reg.university._id" name="university">
-    <ui-select ng-model="reg.university" name="selUni" theme="selectize">
+        <ui-select ng-model="reg.university" name="selUni" theme="selectize">
         <ui-select-match>{{$select.selected.name}}</ui-select-match>
         <ui-select-choices repeat="university in uniList | filter: $select.search">
             <span ng-bind-html="university.name | highlight: $select.search"></span>
@@ -60,34 +87,46 @@
         </ui-select-choices>
     </ui-select>
 
-        <div><label class="arrow-form">University Email</label>
-        <input type="email" ng-model="reg.uni_email" name="uni_email" class="arrow-form">
-        <span ng-show="reg.submitted && regForm.uni_email.$error.email">Invalid email</span>
+    <div ng-show="reg.university"><label class="arrow-form">University Email *</label>
+        <input type="email" ng-class="{true: 'has-error'}[reg.submitted && regForm.uni_email.$invalid]" ng-required="reg.university" ng-model="reg.uni_email" name="uni_email" class="arrow-form" ng-change="autofill()">
+        <div class="error-msg" ng-show="reg.submitted && regForm.uni_email.$error.required">
+            <span class="error-msg">Required</span>
+        </div>
+        <div class="error-msg" ng-class="{true: 'has-error'}[reg.submitted && regForm.uni_email.$invalid]" ng-show="reg.submitted && regForm.uni_email.$error.email">
+            <span class="error-msg">Invalid email</span>
         </div>
     </div>
 
-    <label class="arrow-form" style="margin-top: 1em">Contact Email *</label>
+    <label class="arrow-form">Contact Email *</label>
     <div class="arrow-text" style="color: #3197ca">This email will be the primary way we contact you, it may be different to your university email</div>
-    <input type="email" ng-value="uni_email" name="email" ng-model="reg.email" class="arrow-form" required ng-class="{true: 'has-error'}[reg.submitted && regForm.email.$invalid]">
-    <span ng-show="reg.submitted && regForm.email.$error.email">Invalid email</span>
-    <span ng-show="reg.submitted && regForm.email.$error.required">Required</span>
+    <input type="email" name="email" ng-model="reg.email" class="arrow-form" required ng-class="{true: 'has-error'}[reg.submitted && regForm.email.$invalid]">
+    <div class="error-msg" ng-show="reg.submitted && regForm.email.$error.email">
+        <span class="error-msg">Invalid email</span>
+    </div>
+    <div class="error-msg" ng-show="reg.submitted && regForm.email.$error.required">
+        <span class="error-msg" >Required</span>
+    </div>
 
     <div><label class="arrow-form">Password *</label>
-    <div class="arrow-text" style="color: #3197ca">Please make sure the password is greater than 6 characters</div>
-    <input ng-minlength="6" ng-model="reg.password" type="password" class="arrow-form" name="password" required ng-class="{true: 'has-error'}[reg.submitted && regForm.password.$invalid]">
-    <span ng-show="reg.submitted && regForm.password.$error.required">Required</span>
-    <span ng-show="reg.submitted && regForm.password.$error.minlength">Please have at least 6 characters</span>
+        <div class="arrow-text" style="color: #3197ca">Please make sure the password is greater than 6 characters</div>
+        <input ng-minlength="6" ng-model="reg.password" type="password" class="arrow-form" name="password" required ng-class="{true: 'has-error'}[reg.submitted && regForm.password.$invalid]">
+        <div class="error-msg" ng-show="reg.submitted && regForm.password.$error.required">
+            <span class="error-msg" >Required</span>
+        </div>
+        <div class="error-msg" ng-show="reg.submitted && regForm.password.$error.minlength">
+            <span class="error-msg" >Please have at least 6 characters</span>
+        </div>
     </div>
 
     <div class="form-group" ng-show="reg.password.length > 0">
         <label class="arrow-form">Confirm Password *</label>
          <input class="arrow-form" type="password" name="verify" ng-model="reg.verify" pw="reg.password" required>
-         <span class="red" ng-show="regForm.verify.$error.pw">
-          Passwords don't match!
-         </span>
+         <div class="error-msg" ng-show="regForm.verify.$error.pw">
+            <span class="error-msg">Passwords don't match!</span>
+         </div>
     </div>
 
-    <input type="button" value="Create Account" ng-click="SubmitForm()" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$invalid">
-    <input type="submit" value="Create Account for real" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$valid">
+    <input type="button" value="Create Account" ng-click="reg.submitted = true" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$invalid">
+    <input type="submit" value="Create Account" class="arrow-button" style="margin-top: 2em;" ng-show="regForm.$valid">
 </form>
 <% include ../include/indexBottom %>

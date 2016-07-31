@@ -282,17 +282,18 @@ app.get('/verify/:type/:token', function(req, res){
                     req.flash('errMsg', 'There was a problem creating your token. Please try again.');
                     return res.redirect('../../../default_error');
                 }
+                var bothEmails = user.uni_email === user.email ? true : false;
 
-                if(req.params.type === "email"){
+                if(req.params.type === "email" || bothEmails){
                     user.verified_primary_email = true;
                     user.verify_primary_token = undefined;
                     user.verify_primary_token_expires = undefined;
-                } else if(req.params.type === "uni_email") {
+                }
+                if(req.params.type === "uni_email" || bothEmails) {
                     user.verified_uni_email = true;
                     user.verify_uni_token = undefined;
                     user.verify_uni_token_expires = undefined;
                 }
-                
 
                 user.save(function(err){
                     req.login(user, function(err){
@@ -357,35 +358,36 @@ app.post('/register', passport.authenticate('register', {
     failureRedirect: 'register',
     failureFlash : true
 }), function(req, res){
+
      var mailOptions = {
         to: req.user.email,
-        from: 'autoreply@alex.com',
-        subject: 'AlexWork Email Verification',
-        text: 'Hello ' + req.user.first_name + ',\n\nYou are receiving this because you have requested to verify your email.\n\n' +
-        'Please click on the following link, or paste this into your browser to do so:\n\n' +
-        'http://' + req.headers.host + '/auth/verify/email/' + req.user.verify_primary_token + '\n\n' +
-        'Thanks,\nAlex'
+        from: 'autoreply@alex.com'
     };
-    smtpTransport.sendMail(mailOptions);
 
-    if(req.user.uni_email){
-        var mailOptions = {
-            to: req.user.uni_email,
-            from: 'autoreply@alex.com',
-            subject: 'AlexWork UNI Email Verification',
-            text: 'Hello ' + req.user.first_name + ',\n\nYou are receiving this because you have requested to verify your email.\n\n' +
+    if(req.user.uni_email && req.user.uni_email !== req.user.email){
+        mailOptions.subject = 'AlexWork UNI Email Verification';
+        mailOptions.text = 'Hello ' + req.user.first_name + ',\n\nYou are receiving this because you have requested to verify your email.\n\n' +
             'Please click on the following link, or paste this into your browser to do so:\n\n' +
             'http://' + req.headers.host + '/auth/verify/uni_email/' + req.user.verify_uni_token + '\n\n' +
             'Thanks,\nAlex'
-        };
-        smtpTransport.sendMail(mailOptions);
+        req.flash('infoMsg', "We have just sent verification emails to both your primary and uni email. You must verify both before entering a tournament");
+    } else if (req.user.uni_email){
+        mailOptions.subject = 'AlexWork BOTH Email Verification';
+        mailOptions.text = 'Hello ' + req.user.first_name + ',\n\nYou are receiving this because you have requested to verify your email.\n\n' +
+            'Please click on the following link, or paste this into your browser to do so:\n\n' +
+            'http://' + req.headers.host + '/auth/verify/uni_email/' + req.user.verify_uni_token + '\n\n' +
+            'Thanks,\nAlex';
         req.flash('infoMsg', "We have just sent verification emails to both your primary and uni email. You must verify both before entering a tournament");
     } else {
+        mailOptions.subject = 'AlexWork Email Verification',
+        mailOptions.text = 'Hello ' + req.user.first_name + ',\n\nYou are receiving this because you have requested to verify your email.\n\n' +
+            'Please click on the following link, or paste this into your browser to do so:\n\n' +
+            'http://' + req.headers.host + '/auth/verify/email/' + req.user.verify_primary_token + '\n\n' +
+            'Thanks,\nAlex';
         req.flash('infoMsg', "We have just sent a verification email to your primary email. Please verify your email before you can enter a tournament");
     }
-
-    
-    res.redirect('../profile/')
+    smtpTransport.sendMail(mailOptions);
+    res.redirect('../profile');
 });
 
 
