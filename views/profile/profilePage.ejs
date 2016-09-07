@@ -1,7 +1,5 @@
 <% include ../include/indexTop %>
-<script src="/mod/angular/angular.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
-<script src="/javascripts/profilePage.js"></script>
+<script src="/javascripts/controllers.js"></script>
 <style>
     .tournament-box{
       background-color: #242629;
@@ -28,7 +26,7 @@
       padding: 30px;
     }
 </style>
-<div ng-app="profile" ng-controller="profileCtrl">
+<div ng-app="controllers" ng-controller="profileCtrl">
 	<script>
 	var user = <%- JSON.stringify(user) %>;
 	</script>
@@ -64,6 +62,7 @@
 	</div>
 
 	<h2>Current Teams</h2>
+	<a href="team/create"><h4>Create Team</h4></a>
 
 	<div class="team-box">
 		<h2>Team A</h2>

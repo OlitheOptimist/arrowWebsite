@@ -15,4 +15,4 @@ teamSchema.pre('save',function(next){
 	next();
 });
 
-module.exports = mongoose.model('universities', teamSchema);
+module.exports = mongoose.model('team', teamSchema);

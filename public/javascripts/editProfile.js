@@ -1,4 +1,4 @@
-var app = angular.module('profile', []);
+var app = angular.module('profile', ['ngSanitize']);
 
 app.directive('pw', function(){
 	return {

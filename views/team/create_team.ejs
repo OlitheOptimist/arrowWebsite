@@ -1,0 +1,44 @@
+<% include ../include/indexTop %>
+<script src="/javascripts/controllers.js"></script>
+<script>
+var user = <%- JSON.stringify(user) %>;
+</script>
+<form method="post" ng-app="controllers" ng-controller="teamCtrl">
+	<div>
+        <label class="arrow-form">Team Name*</label>
+        <div class="name-div" style="margin: 0 2.5% 0 0;">
+            <input name="first_name" class="arrow-form" required>
+            <div class="error-msg">
+                <span class="error-msg">Required</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <label class="arrow-form">Team Abbreviation *</label>
+        <div class="name-div" style="margin: 0 2.5% 0 0;">
+            <input name="first_name" class="arrow-form" required>
+            <div class="error-msg">
+                <span class="error-msg">Required</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+     	<label class="arrow-form">Team University</label>
+        <input disabled class="arrow-form" ng-model="user.uni_name">
+    </div>
+
+    <div>
+     	<label class="arrow-form">Team Logo</label>
+        <input name="uni_email" class="arrow-form">
+    </div>
+
+    <div>
+     	<label class="arrow-form">Game *</label>
+        <select>
+        	<option selected>Dota</option>
+    	</select>
+    </div>
+</form>
+<% include ../include/indexBottom %>

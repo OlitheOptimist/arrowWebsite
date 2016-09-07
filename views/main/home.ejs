@@ -1,3 +1,53 @@
-<% include ../include/indexTop %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arrow eSports</title>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/mod/font-awesome/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/maincss.css">
+
+    <script src="/mod/jquery/dist/jquery.min.js"></script>
+
+    <script src="/mod/angular/angular.min.js"></script>
+    <script src="/mod/angular-sanitize/angular-sanitize.min.js"></script>
+</head>    
+<body>  
+<div class="mainContent">
+    <div class="banner">
+        <img src="/images/arrow_esports_arrow.png" style="height:100%;float:left;">
+        <span class="arroweSportsTitle">Arrow eSports</span>
+    </div>
+    <div>
+        <ul class="banner-header">
+            <li class="banner-header"><a class="banner-header" href="/">Home</a></li>
+            <li class="banner-header"><a class="banner-header" href="/tournaments">Tournaments</a></li>
+            <li class="banner-header"><a class="banner-header" href="/about">About</a></li>
+            <% if(user != null){ %>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/">My Profile</a></li>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/tournaments">My Tournaments</a></li>
+            <li class="banner-header banner-header-loggedin"><a class="banner-header" href="/profile/teams">My Teams</a></li>
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/logout">Logout</a></li>
+            <% } else { %>
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/login">Login</a></li>   
+            <li style="float:right;"class="banner-header"><a class="banner-header" href="/auth/register">Register</a></li>
+            <% } %>
+        </ul>
+</div>
+<div style="padding: 2em;overflow: hidden;">
 <h1>Arrow Home Page</h1>
-<% include ../include/indexBottom %>
+    </div>
+    <div class="bottomBanner">
+        <div class="bottomIcons">
+            <a href="https://www.facebook.com/arrowesports/"><i class="fa fa-facebook-square fa-2x icons"><span style="font-family: 'Oswald', sans-serif"> facebook</span></i></a>
+        </div>
+        <div class="bottomIcons">
+            <a href="https://twitter.com/UK_Arrow"><i class="fa fa-twitter fa-2x icons"><span style="font-family: 'Oswald', sans-serif"> Twitter</span></i></a>
+        </div>
+        <div class="bottomIcons">
+            <a href="https://twitter.com/UK_Arrow"><i class="fa fa-youtube fa-2x icons"><span style="font-family: 'Oswald', sans-serif"> YouTube</span></i></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

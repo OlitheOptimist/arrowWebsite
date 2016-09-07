@@ -17,6 +17,7 @@ var User = require('./models/user');
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var profile = require('./routes/profile');
+var team = require('./routes/team');
 
 var app = express();
 
@@ -41,6 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(flash());
 app.use('/profile', profile);
 app.use('/auth', auth);
+app.use('/team', team);
 app.use('/', routes);
 
 

@@ -1,5 +1,4 @@
 <% include ../include/indexTop %>
-<script src="/mod/angular/angular.min.js"></script>
 <script src="/javascripts/editProfile.js"></script>
 <script>
 var user = <%- JSON.stringify(user) %>;
@@ -51,7 +50,7 @@ var user = <%- JSON.stringify(user) %>;
        font-size: 17px;
     }
 </style>
-<div ng-controller="profileControl" ng-app="profile">
+<div ng-controller="profileControl" ng-app="controllers">
 <form name="editName" novalidate ng-submit="changeName(editName.$valid)">
     <h2>Change Name</h2>
     <div ng-show="successName" class="sucMsg"><span>Name Successfully Changed</span></div>
